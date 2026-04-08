@@ -27,7 +27,15 @@ video {
   z-index: -2;
 }
 
-/* Cursor */
+/* DARK FADE FOR READABILITY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: -1;
+}
+
+/* CURSOR */
 .cursor {
   position: fixed;
   width: 40px;
@@ -39,13 +47,14 @@ video {
   z-index: 999;
 }
 
-/* Glass */
+/* GLASS */
 .liquid-glass {
   background: rgba(0,0,0,0.4);
   backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Animations */
+/* FADE UP */
 .fade-up {
   opacity: 0;
   transform: translateY(40px);
@@ -56,29 +65,29 @@ video {
   transform: translateY(0);
 }
 
-/* Magnetic */
+/* MAGNETIC */
 .magnetic {
   transition: transform 0.2s ease;
 }
 
-/* Tilt cards */
+/* TILT */
 .card {
   transition: transform 0.2s ease;
   transform-style: preserve-3d;
 }
 
-/* Hover zoom */
+/* FLOAT */
+@keyframes float {
+  0%,100% { transform: translateY(0px);}
+  50% { transform: translateY(-10px);}
+}
+
+/* IMAGE HOVER */
 .img-hover img {
   transition: transform 0.5s ease;
 }
 .img-hover:hover img {
-  transform: scale(1.08);
-}
-
-/* Floating */
-@keyframes float {
-  0%,100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  transform: scale(1.1);
 }
 </style>
 </head>
@@ -92,53 +101,69 @@ video {
 <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260330_145725_08886141-ed95-4a8e-8d6d-b75eaadce638.mp4">
 </video>
 
+<div class="overlay"></div>
+
 <!-- NAV -->
-<div class="px-6 pt-6 flex justify-between items-center">
+<div class="px-6 md:px-12 pt-6 flex justify-between items-center">
 <div class="text-xl font-semibold">Jaden Mack</div>
-<button class="bg-white text-black px-4 py-2 rounded-lg magnetic">Chat</button>
+
+<div class="hidden md:flex gap-8 text-sm">
+<a href="#about">About</a>
+<a href="#work">Work</a>
+<a href="#results">Results</a>
+<a href="#contact">Contact</a>
+</div>
+
+<button class="bg-white text-black px-5 py-2 rounded-lg magnetic">
+Start
+</button>
 </div>
 
 <!-- HERO -->
-<section class="min-h-screen flex items-center px-6">
+<section class="min-h-screen flex items-end px-6 md:px-12 pb-20">
+
 <div>
+
 <h1 class="text-5xl md:text-7xl mb-6 fade-up">
-I build systems<br>that make money.
+I build systems<br>that print results.
 </h1>
 
-<p class="text-gray-300 mb-6 fade-up">
-Entrepreneur. Founder of Moonside Tech. I build high-performance apps that scale.
+<p class="text-gray-300 max-w-xl mb-6 fade-up">
+I'm Jaden Mack, founder of Moonside Tech. I design high-performance digital systems for businesses that actually want to scale.
 </p>
 
-<button class="bg-white text-black px-8 py-3 rounded-lg magnetic fade-up">
-Work With Me →
-</button>
+<div class="flex gap-4 fade-up">
+<button class="bg-white text-black px-8 py-3 rounded-lg magnetic">Work With Me</button>
+<button class="liquid-glass px-8 py-3 rounded-lg magnetic">View Work</button>
 </div>
+
+</div>
+
 </section>
 
-<!-- ABOUT (MAIN PHOTO) -->
-<section class="px-6 md:px-12 py-32 grid md:grid-cols-2 gap-12 items-center">
+<!-- ABOUT -->
+<section id="about" class="px-6 md:px-12 py-32 grid md:grid-cols-2 gap-12 items-center">
 
-<div class="fade-up img-hover">
+<div class="img-hover fade-up">
 <img src="https://via.placeholder.com/600x800" class="rounded-2xl">
-<!-- REPLACE WITH YOUR MAIN PHOTO -->
 </div>
 
 <div class="fade-up">
-<h2 class="text-3xl mb-6">Who I Am</h2>
+<h2 class="text-3xl mb-6">Builder First.</h2>
 <p class="text-gray-300 mb-4">
-I'm Jaden Mack, an entrepreneur focused on building systems that actually generate results.
+I don’t just design websites. I build systems that drive revenue.
 </p>
 <p class="text-gray-400">
-I run Moonside Tech, where I create scalable B2B and B2C applications designed for performance and conversion.
+Through Moonside Tech, I create scalable B2B and B2C platforms engineered for performance.
 </p>
 </div>
 
 </section>
 
-<!-- LIFESTYLE GRID -->
+<!-- PHOTO GRID -->
 <section class="px-6 md:px-12 py-24">
 
-<h2 class="text-3xl mb-10 fade-up">Outside the Build</h2>
+<h2 class="text-3xl mb-10 fade-up">Real Life</h2>
 
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
@@ -147,17 +172,13 @@ I run Moonside Tech, where I create scalable B2B and B2C applications designed f
 <img src="https://via.placeholder.com/300" class="rounded-xl fade-up">
 <img src="https://via.placeholder.com/300" class="rounded-xl fade-up">
 
-<!-- REPLACE WITH:
-- lifestyle
-- working
-- desk setup
-- casual -->
 </div>
 
 </section>
 
 <!-- WORK -->
-<section class="px-6 md:px-12 py-24">
+<section id="work" class="px-6 md:px-12 py-24">
+
 <h2 class="text-3xl mb-12 fade-up">Selected Work</h2>
 
 <div class="grid md:grid-cols-3 gap-6">
@@ -180,14 +201,15 @@ I run Moonside Tech, where I create scalable B2B and B2C applications designed f
 <div class="img-hover">
 <img src="https://picsum.photos/402/300" class="rounded mb-4">
 </div>
-<h3>Dashboard UI</h3>
+<h3>Client Dashboard</h3>
 </div>
 
 </div>
+
 </section>
 
 <!-- RESULTS -->
-<section class="px-6 md:px-12 py-24">
+<section id="results" class="px-6 md:px-12 py-24">
 
 <h2 class="text-3xl mb-12 fade-up">Proof</h2>
 
@@ -209,66 +231,54 @@ I run Moonside Tech, where I create scalable B2B and B2C applications designed f
 
 </section>
 
-<!-- PROCESS -->
-<section class="px-6 md:px-12 py-24">
-<h2 class="text-3xl mb-12 fade-up">Process</h2>
-
-<div class="grid md:grid-cols-4 gap-6">
-
-<div class="liquid-glass p-6 rounded-xl fade-up">Discover</div>
-<div class="liquid-glass p-6 rounded-xl fade-up">Build</div>
-<div class="liquid-glass p-6 rounded-xl fade-up">Optimize</div>
-<div class="liquid-glass p-6 rounded-xl fade-up">Scale</div>
-
-</div>
-</section>
-
 <!-- CONTACT -->
-<section class="px-6 py-32 text-center">
-<h2 class="text-4xl mb-6 fade-up">Let’s build something that performs.</h2>
+<section id="contact" class="px-6 py-32 text-center">
+
+<h2 class="text-4xl mb-6 fade-up">Let’s build something that wins.</h2>
 
 <button class="bg-white text-black px-10 py-4 rounded-lg magnetic fade-up">
 Start →
 </button>
+
 </section>
 
 <script>
 // Cursor
 const cursor = document.getElementById("cursor");
 document.addEventListener("mousemove", e => {
-  cursor.style.left = e.clientX + "px";
-  cursor.style.top = e.clientY + "px";
+cursor.style.left = e.clientX + "px";
+cursor.style.top = e.clientY + "px";
 });
 
 // Magnetic
 document.querySelectorAll('.magnetic').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width/2;
-    const y = e.clientY - rect.top - rect.height/2;
-    btn.style.transform = `translate(${x*0.2}px, ${y*0.2}px)`;
-  });
-  btn.addEventListener('mouseleave', () => btn.style.transform = 'translate(0,0)');
+btn.addEventListener('mousemove', e => {
+const rect = btn.getBoundingClientRect();
+const x = e.clientX - rect.left - rect.width/2;
+const y = e.clientY - rect.top - rect.height/2;
+btn.style.transform = `translate(${x*0.25}px, ${y*0.25}px)`;
+});
+btn.addEventListener('mouseleave', () => btn.style.transform = 'translate(0,0)');
 });
 
 // Tilt cards
 document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left)/rect.width - 0.5;
-    const y = (e.clientY - rect.top)/rect.height - 0.5;
-    card.style.transform = `rotateY(${x*10}deg) rotateX(${-y*10}deg)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'rotateY(0) rotateX(0)';
-  });
+card.addEventListener('mousemove', e => {
+const rect = card.getBoundingClientRect();
+const x = (e.clientX - rect.left)/rect.width - 0.5;
+const y = (e.clientY - rect.top)/rect.height - 0.5;
+card.style.transform = `rotateY(${x*12}deg) rotateX(${-y*12}deg)`;
+});
+card.addEventListener('mouseleave', () => {
+card.style.transform = 'rotateY(0) rotateX(0)';
+});
 });
 
 // Scroll animations
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('show');
-  });
+entries.forEach(entry => {
+if (entry.isIntersecting) entry.target.classList.add('show');
+});
 });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
