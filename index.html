@@ -1,197 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jaden Mack</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaden Mack</title>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  background: black;
+  color: white;
+  overflow-x: hidden;
+  cursor: none;
+}
 
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      background: black;
-      color: white;
-      overflow-x: hidden;
-    }
+/* VIDEO */
+video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
 
-    video {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
+/* Cursor */
+.cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
 
-    .liquid-glass {
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      position: relative;
-      overflow: hidden;
-    }
+/* Glass */
+.liquid-glass {
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+}
 
-    .liquid-glass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1.4px;
-      background: linear-gradient(180deg,
-        rgba(255,255,255,0.3) 0%,
-        rgba(255,255,255,0.1) 20%,
-        rgba(255,255,255,0) 40%,
-        rgba(255,255,255,0) 60%,
-        rgba(255,255,255,0.1) 80%,
-        rgba(255,255,255,0.3) 100%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-    }
+/* Animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .char {
-      display: inline-block;
-      opacity: 0;
-      transform: translateX(-18px);
-      transition: all 0.5s ease;
-    }
+/* Magnetic */
+.magnetic {
+  transition: transform 0.2s ease;
+}
 
-    .char.show {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  </style>
+/* Tilt cards */
+.card {
+  transition: transform 0.2s ease;
+  transform-style: preserve-3d;
+}
+
+/* Hover zoom */
+.img-hover img {
+  transition: transform 0.5s ease;
+}
+.img-hover:hover img {
+  transform: scale(1.08);
+}
+
+/* Floating */
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+</style>
 </head>
 
 <body>
 
-<!-- VIDEO (CLEAN IMPLEMENTATION) -->
-<video 
-  id="bgVideo"
-  autoplay 
-  muted 
-  loop 
-  playsinline
-  preload="auto"
->
-  <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260330_145725_08886141-ed95-4a8e-8d6d-b75eaadce638.mp4" type="video/mp4">
+<div class="cursor" id="cursor"></div>
+
+<!-- VIDEO -->
+<video autoplay muted loop playsinline>
+<source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260330_145725_08886141-ed95-4a8e-8d6d-b75eaadce638.mp4">
 </video>
 
-<!-- NAVBAR -->
-<div class="px-6 md:px-12 lg:px-16 pt-6">
-  <div class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
-
-    <div class="text-2xl font-semibold tracking-tight">
-      Jaden Mack
-    </div>
-
-    <div class="hidden md:flex gap-8 text-sm">
-      <a href="#" class="hover:text-gray-300">About</a>
-      <a href="#" class="hover:text-gray-300">Work</a>
-      <a href="#" class="hover:text-gray-300">Results</a>
-      <a href="#" class="hover:text-gray-300">Contact</a>
-    </div>
-
-    <button class="bg-white text-black px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-100">
-      Start a Chat
-    </button>
-
-  </div>
+<!-- NAV -->
+<div class="px-6 pt-6 flex justify-between items-center">
+<div class="text-xl font-semibold">Jaden Mack</div>
+<button class="bg-white text-black px-4 py-2 rounded-lg magnetic">Chat</button>
 </div>
 
 <!-- HERO -->
-<div class="px-6 md:px-12 lg:px-16 flex flex-col min-h-screen">
-  <div class="flex-1 flex flex-col justify-end pb-12 lg:pb-16 lg:grid lg:grid-cols-2 lg:items-end">
+<section class="min-h-screen flex items-center px-6">
+<div>
+<h1 class="text-5xl md:text-7xl mb-6 fade-up">
+I build systems<br>that make money.
+</h1>
 
-    <!-- LEFT -->
-    <div>
+<p class="text-gray-300 mb-6 fade-up">
+Entrepreneur. Founder of Moonside Tech. I build high-performance apps that scale.
+</p>
 
-      <h1 id="heading" class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal mb-4" style="letter-spacing:-0.04em;"></h1>
+<button class="bg-white text-black px-8 py-3 rounded-lg magnetic fade-up">
+Work With Me →
+</button>
+</div>
+</section>
 
-      <p id="subheading" class="text-base md:text-lg text-gray-300 mb-5 opacity-0 transition-opacity duration-1000">
-        I'm Jaden Mack, entrepreneur and founder of Moonside Tech. I build systems and web apps that generate real results.
-      </p>
+<!-- ABOUT (MAIN PHOTO) -->
+<section class="px-6 md:px-12 py-32 grid md:grid-cols-2 gap-12 items-center">
 
-      <div id="buttons" class="flex flex-wrap gap-4 opacity-0 transition-opacity duration-1000">
-        <button class="bg-white text-black px-8 py-3 rounded-lg font-medium">
-          Work With Me
-        </button>
-
-        <button class="liquid-glass border border-white/20 px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-black transition">
-          View Projects
-        </button>
-      </div>
-
-    </div>
-
-    <!-- RIGHT -->
-    <div class="flex items-end justify-start lg:justify-end mt-8 lg:mt-0">
-      <div id="tag" class="liquid-glass border border-white/20 px-6 py-3 rounded-xl opacity-0 transition-opacity duration-1000">
-        <div class="text-lg md:text-xl lg:text-2xl font-light">
-          $15K+ Generated. Real systems.
-        </div>
-      </div>
-    </div>
-
-  </div>
+<div class="fade-up img-hover">
+<img src="https://via.placeholder.com/600x800" class="rounded-2xl">
+<!-- REPLACE WITH YOUR MAIN PHOTO -->
 </div>
 
+<div class="fade-up">
+<h2 class="text-3xl mb-6">Who I Am</h2>
+<p class="text-gray-300 mb-4">
+I'm Jaden Mack, an entrepreneur focused on building systems that actually generate results.
+</p>
+<p class="text-gray-400">
+I run Moonside Tech, where I create scalable B2B and B2C applications designed for performance and conversion.
+</p>
+</div>
+
+</section>
+
+<!-- LIFESTYLE GRID -->
+<section class="px-6 md:px-12 py-24">
+
+<h2 class="text-3xl mb-10 fade-up">Outside the Build</h2>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+<img src="https://via.placeholder.com/300" class="rounded-xl fade-up">
+<img src="https://via.placeholder.com/300" class="rounded-xl fade-up">
+<img src="https://via.placeholder.com/300" class="rounded-xl fade-up">
+<img src="https://via.placeholder.com/300" class="rounded-xl fade-up">
+
+<!-- REPLACE WITH:
+- lifestyle
+- working
+- desk setup
+- casual -->
+</div>
+
+</section>
+
+<!-- WORK -->
+<section class="px-6 md:px-12 py-24">
+<h2 class="text-3xl mb-12 fade-up">Selected Work</h2>
+
+<div class="grid md:grid-cols-3 gap-6">
+
+<div class="card liquid-glass p-4 rounded-xl fade-up">
+<div class="img-hover">
+<img src="https://picsum.photos/400/300" class="rounded mb-4">
+</div>
+<h3>SaaS Platform</h3>
+</div>
+
+<div class="card liquid-glass p-4 rounded-xl fade-up">
+<div class="img-hover">
+<img src="https://picsum.photos/401/300" class="rounded mb-4">
+</div>
+<h3>Ecommerce System</h3>
+</div>
+
+<div class="card liquid-glass p-4 rounded-xl fade-up">
+<div class="img-hover">
+<img src="https://picsum.photos/402/300" class="rounded mb-4">
+</div>
+<h3>Dashboard UI</h3>
+</div>
+
+</div>
+</section>
+
+<!-- RESULTS -->
+<section class="px-6 md:px-12 py-24">
+
+<h2 class="text-3xl mb-12 fade-up">Proof</h2>
+
+<div class="grid md:grid-cols-3 gap-6">
+
+<div class="liquid-glass p-6 rounded-xl fade-up" style="animation: float 4s infinite;">
+<h3 class="text-2xl">$15K+</h3>
+</div>
+
+<div class="liquid-glass p-6 rounded-xl fade-up" style="animation: float 5s infinite;">
+<h3 class="text-2xl">Systems Built</h3>
+</div>
+
+<div class="liquid-glass p-6 rounded-xl fade-up" style="animation: float 6s infinite;">
+<h3 class="text-2xl">Fast Execution</h3>
+</div>
+
+</div>
+
+</section>
+
+<!-- PROCESS -->
+<section class="px-6 md:px-12 py-24">
+<h2 class="text-3xl mb-12 fade-up">Process</h2>
+
+<div class="grid md:grid-cols-4 gap-6">
+
+<div class="liquid-glass p-6 rounded-xl fade-up">Discover</div>
+<div class="liquid-glass p-6 rounded-xl fade-up">Build</div>
+<div class="liquid-glass p-6 rounded-xl fade-up">Optimize</div>
+<div class="liquid-glass p-6 rounded-xl fade-up">Scale</div>
+
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="px-6 py-32 text-center">
+<h2 class="text-4xl mb-6 fade-up">Let’s build something that performs.</h2>
+
+<button class="bg-white text-black px-10 py-4 rounded-lg magnetic fade-up">
+Start →
+</button>
+</section>
+
 <script>
-  const video = document.getElementById("bgVideo");
+// Cursor
+const cursor = document.getElementById("cursor");
+document.addEventListener("mousemove", e => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
 
-  // HARD FORCE PLAY (fix edge cases)
-  video.muted = true;
-
-  const playVideo = () => {
-    video.play().catch(() => {});
-  };
-
-  video.addEventListener("loadeddata", playVideo);
-  window.addEventListener("load", playVideo);
-
-  // fallback
-  setTimeout(playVideo, 500);
-
-
-  // TEXT ANIMATION
-  const text = "I build systems\nthat make money.";
-  const heading = document.getElementById("heading");
-  const charDelay = 30;
-
-  text.split("\n").forEach((line, lineIndex) => {
-    const lineDiv = document.createElement("div");
-
-    line.split("").forEach((char, charIndex) => {
-      const span = document.createElement("span");
-      span.classList.add("char");
-      span.innerHTML = char === " " ? "&nbsp;" : char;
-
-      const delay = 200 + (lineIndex * line.length * charDelay) + (charIndex * charDelay);
-
-      setTimeout(() => {
-        span.classList.add("show");
-      }, delay);
-
-      lineDiv.appendChild(span);
-    });
-
-    heading.appendChild(lineDiv);
+// Magnetic
+document.querySelectorAll('.magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width/2;
+    const y = e.clientY - rect.top - rect.height/2;
+    btn.style.transform = `translate(${x*0.2}px, ${y*0.2}px)`;
   });
+  btn.addEventListener('mouseleave', () => btn.style.transform = 'translate(0,0)');
+});
 
-  // FADE INS
-  setTimeout(() => subheading.style.opacity = 1, 800);
-  setTimeout(() => buttons.style.opacity = 1, 1200);
-  setTimeout(() => tag.style.opacity = 1, 1400);
+// Tilt cards
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left)/rect.width - 0.5;
+    const y = (e.clientY - rect.top)/rect.height - 0.5;
+    card.style.transform = `rotateY(${x*10}deg) rotateX(${-y*10}deg)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateY(0) rotateX(0)';
+  });
+});
 
+// Scroll animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('show');
+  });
+});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
 
 </body>
