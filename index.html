@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jaden Mack | Moonside Tech</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: black;
+      color: white;
+    }
+
+    /* Liquid Glass */
+    .liquid-glass {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 20%,
+        rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+        rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.3) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Background Video */
+    video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Character animation */
+    .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(-18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .char.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background Video (Mux HLS) -->
+  <video id="bgVideo" autoplay muted loop playsinline></video>
+
+  <!-- Navbar -->
+  <div class="px-6 md:px-12 lg:px-16 pt-6">
+    <div class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
+      
+      <div class="text-2xl font-semibold tracking-tight">
+        Moonside Tech
+      </div>
+
+      <div class="hidden md:flex gap-8 text-sm">
+        <a href="#" class="hover:text-gray-300">Services</a>
+        <a href="#" class="hover:text-gray-300">Work</a>
+        <a href="#" class="hover:text-gray-300">Process</a>
+        <a href="#" class="hover:text-gray-300">About</a>
+      </div>
+
+      <button class="bg-white text-black px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-100">
+        Start a Project
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="px-6 md:px-12 lg:px-16 flex flex-col min-h-screen">
+
+    <div class="flex-1 flex flex-col justify-end pb-12 lg:pb-16 lg:grid lg:grid-cols-2 lg:items-end">
+
+      <!-- LEFT -->
+      <div>
+
+        <h1 id="heading" class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal mb-4" style="letter-spacing: -0.04em;"></h1>
+
+        <p id="subheading" class="text-base md:text-lg text-gray-300 mb-5 opacity-0 transition-opacity duration-1000">
+          Moonside Tech builds high-performance B2B and B2C web applications engineered for speed, scalability, and conversion.
+        </p>
+
+        <div id="buttons" class="flex flex-wrap gap-4 opacity-0 transition-opacity duration-1000">
+          <button class="bg-white text-black px-8 py-3 rounded-lg font-medium">
+            Start a Project
+          </button>
+          <button class="liquid-glass border border-white/20 px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-black transition">
+            View Work
+          </button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="flex items-end justify-start lg:justify-end mt-8 lg:mt-0">
+        <div id="tag" class="liquid-glass border border-white/20 px-6 py-3 rounded-xl opacity-0 transition-opacity duration-1000">
+          <div class="text-lg md:text-xl lg:text-2xl font-light">
+            High-performance web apps. Built to convert.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HLS.js -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <script>
+    // Load Mux HLS stream
+    const video = document.getElementById('bgVideo');
+    const videoSrc = "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+    } else {
+      video.src = videoSrc;
+    }
+
+    // Animated Heading
+    const text = "Engineering systems\nthat scale businesses.";
+    const heading = document.getElementById("heading");
+
+    const charDelay = 30;
+    let totalIndex = 0;
+
+    text.split("\n").forEach((line, lineIndex) => {
+      const lineDiv = document.createElement("div");
+
+      line.split("").forEach((char, charIndex) => {
+        const span = document.createElement("span");
+        span.classList.add("char");
+        span.innerHTML = char === " " ? "&nbsp;" : char;
+
+        const delay = 200 + (lineIndex * line.length * charDelay) + (charIndex * charDelay);
+
+        setTimeout(() => {
+          span.classList.add("show");
+        }, delay);
+
+        lineDiv.appendChild(span);
+        totalIndex++;
+      });
+
+      heading.appendChild(lineDiv);
+    });
+
+    // Fade-ins
+    setTimeout(() => {
+      document.getElementById("subheading").style.opacity = 1;
+    }, 800);
+
+    setTimeout(() => {
+      document.getElementById("buttons").style.opacity = 1;
+    }, 1200);
+
+    setTimeout(() => {
+      document.getElementById("tag").style.opacity = 1;
+    }, 1400);
+  </script>
+
+</body>
+</html>
