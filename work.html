@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work - Jaden Mack</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  background: white;
+  color: black;
+}
+
+.section {
+  padding: 100px 24px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.fade {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+.fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="flex justify-between px-6 py-4 border-b">
+  <div class="font-semibold">Jaden Mack</div>
+  <div class="flex gap-6 text-sm">
+    <a href="index.html">Home</a>
+    <a href="work.html">Work</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<section class="section">
+  <h1 class="text-4xl mb-6 fade">Selected Work</h1>
+  <p class="text-gray-600 fade">
+    A collection of personal and experimental projects focused on learning and execution.
+  </p>
+</section>
+
+<!-- PROJECTS -->
+<section class="section">
+  <div class="grid md:grid-cols-2 gap-8">
+
+    <div class="card border rounded-xl p-6 fade">
+      <img src="https://picsum.photos/600/400" class="rounded mb-4">
+      <h3 class="text-xl font-semibold">Project One</h3>
+      <p class="text-gray-600 text-sm">Description of what this project does.</p>
+    </div>
+
+    <div class="card border rounded-xl p-6 fade">
+      <img src="https://picsum.photos/601/400" class="rounded mb-4">
+      <h3 class="text-xl font-semibold">Project Two</h3>
+      <p class="text-gray-600 text-sm">Description of what this project does.</p>
+    </div>
+
+    <div class="card border rounded-xl p-6 fade">
+      <img src="https://picsum.photos/602/400" class="rounded mb-4">
+      <h3 class="text-xl font-semibold">Project Three</h3>
+      <p class="text-gray-600 text-sm">Description of what this project does.</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('show');
+  });
+});
+
+document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
