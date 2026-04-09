@@ -1,0 +1,234 @@
+// FULL PRODUCTION-READY PRISMA CINEMATIC SITE
+// Stack: React + Vite + TS + Tailwind + Framer Motion
+
+// =========================
+// index.html (HEAD FONTS)
+// =========================
+// Add inside <head>
+/*
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+*/
+
+// =========================
+// index.css
+// =========================
+/*
+* { font-family: 'Almarai', sans-serif; }
+
+.noise-overlay {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+*/
+
+// =========================
+// App.tsx
+// =========================
+import HeroCanvas from "./components/HeroCanvas";
+import OriginStory from "./components/OriginStory";
+import Capabilities from "./components/Capabilities";
+
+export default function App() {
+  return (
+    <div className="bg-black">
+      <HeroCanvas />
+      <OriginStory />
+      <Capabilities />
+    </div>
+  );
+}
+
+// =========================
+// WordsPullUp.tsx
+// =========================
+import { motion } from "framer-motion";
+
+export default function WordsPullUp({ text }: { text: string }) {
+  return (
+    <div className="text-[26vw] md:text-[20vw] leading-[0.85] tracking-[-0.07em] text-[#E1E0CC]">
+      {text.split(" ").map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="inline-block mr-2"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
+
+// =========================
+// NavPill.tsx
+// =========================
+export default function NavPill() {
+  const items = ["Our story", "Collective", "Workshops", "Programs", "Inquiries"];
+
+  return (
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-md px-6 py-2 rounded-b-3xl flex gap-6 text-xs">
+      {items.map((item) => (
+        <span key={item} className="text-[#E1E0CC]/80 hover:text-[#E1E0CC] cursor-pointer">
+          {item}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+// =========================
+// CTAOrb.tsx
+// =========================
+import { ArrowRight } from "lucide-react";
+
+export default function CTAOrb() {
+  return (
+    <button className="bg-[#DEDBC8] text-black px-6 py-2 rounded-full flex items-center gap-2 group transition-all hover:gap-3">
+      Join the lab
+      <span className="bg-black rounded-full w-10 h-10 flex items-center justify-center transition-transform group-hover:scale-110">
+        <ArrowRight className="text-white" size={16} />
+      </span>
+    </button>
+  );
+}
+
+// =========================
+// HeroCanvas.tsx
+// =========================
+import { motion } from "framer-motion";
+import NavPill from "./NavPill";
+import WordsPullUp from "./WordsPullUp";
+import CTAOrb from "./CTAOrb";
+
+export default function HeroCanvas() {
+  return (
+    <section className="h-screen p-4 md:p-6">
+      <div className="relative w-full h-full rounded-[2rem] overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
+        />
+
+        <div className="noise-overlay absolute inset-0 opacity-70 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+
+        <NavPill />
+
+        <div className="absolute bottom-0 w-full grid grid-cols-12 p-6">
+          <div className="col-span-8">
+            <WordsPullUp text="Prisma" />
+          </div>
+
+          <div className="col-span-4 flex flex-col justify-end gap-4">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[#DEDBC8]/70 text-sm"
+            >
+              Prisma is a worldwide network of visual artists, filmmakers and storytellers bound by passion.
+            </motion.p>
+
+            <CTAOrb />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// =========================
+// OriginStory.tsx
+// =========================
+import { motion } from "framer-motion";
+
+export default function OriginStory() {
+  return (
+    <section className="py-32 px-6 text-center bg-black">
+      <div className="bg-[#101010] p-12 rounded-xl max-w-4xl mx-auto">
+        <p className="text-[#DEDBC8] text-xs mb-4">Founder · Builder · Agency Operator</p>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[0.9] max-w-3xl mx-auto"
+        >
+          I am Jaden Mack, <span className="italic font-serif">an agency owner.</span>
+          <br />
+          I build systems, brands, and digital experiences that convert.
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-[#DEDBC8]/80 mt-6 text-sm sm:text-base max-w-2xl mx-auto"
+        >
+          Over the past phase of my journey, I’ve generated over $15,000 building and scaling
+          client systems through a lean agency model. What started as curiosity turned into
+          execution, then into results.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="text-gray-400 mt-4 text-xs sm:text-sm max-w-2xl mx-auto"
+        >
+          I’m not driven by titles or labels. I’m driven by momentum. Every project is a step
+          forward — refining my craft, expanding my perspective, and building a body of work
+          that speaks before I do.
+        </motion.p>
+      </div>
+    </section>
+  );
+}
+
+// =========================
+// Capabilities.tsx
+// =========================
+import { motion } from "framer-motion";
+
+export default function Capabilities() {
+  return (
+    <section className="min-h-screen bg-black px-6 py-20 relative">
+      <div className="bg-noise absolute inset-0 opacity-15" />
+
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        className="text-center text-3xl text-[#E1E0CC] mb-12"
+      >
+        Studio-grade workflows for visionary creators.
+      </motion.h2>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {["Storyboard", "Critiques", "Immersion", "Canvas"].map((item, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-[#212121] p-6 rounded-xl"
+          >
+            <h3 className="text-[#DEDBC8] mb-2">{item}</h3>
+            <p className="text-gray-400 text-sm">
+              Advanced tools designed for creators.
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
